@@ -4,13 +4,53 @@ from range import Range
 
 def test_invalid_range():
     with pytest.raises(ValueError):
-        Range.of(50, 10)
+        Range.open(30, 20)
+
+    with pytest.raises(ValueError):
+        Range.closed(35, 15)
+
+    with pytest.raises(ValueError):
+        Range.open_closed(100, 50)
+
+    with pytest.raises(ValueError):
+        Range.closed_open(80, 40)
 
 
-def test_valid_range():
-    range = Range.of(10, 50)
+def test_valid_open_range():
+    range = Range.open(10, 50)
+
+    assert range.contains(5) is False
+    assert range.contains(10) is False
+    assert range.contains(25) is True
+    assert range.contains(50) is False
+    assert range.contains(51) is False
+
+
+def test_valid_closed_range():
+    range = Range.closed(10, 50)
 
     assert range.contains(5) is False
     assert range.contains(10) is True
     assert range.contains(25) is True
     assert range.contains(50) is True
+    assert range.contains(51) is False
+
+
+def test_valid_open_closed_range():
+    range = Range.open_closed(10, 50)
+
+    assert range.contains(5) is False
+    assert range.contains(10) is False
+    assert range.contains(25) is True
+    assert range.contains(50) is True
+    assert range.contains(51) is False
+
+
+def test_valid_closed_open_range():
+    range = Range.closed_open(10, 50)
+
+    assert range.contains(5) is False
+    assert range.contains(10) is True
+    assert range.contains(25) is True
+    assert range.contains(50) is False
+    assert range.contains(51) is False
