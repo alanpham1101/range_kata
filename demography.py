@@ -51,3 +51,10 @@ def analyze_member_demography(members: list[dict]) -> dict[str, list[dict]]:
                 break
             gen_index += 1
     return res
+
+
+def check_member_format(members: dict) -> bool:
+    for member in members:
+        if "name" not in member or "birthdate" not in member:
+            return False
+    return True
