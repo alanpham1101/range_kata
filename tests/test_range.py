@@ -54,3 +54,53 @@ def test_valid_closed_open_range():
     assert range.contains(25) is True
     assert range.contains(50) is False
     assert range.contains(51) is False
+
+
+def test_valid_less_than_range():
+    range = Range.less_than(10)
+
+    assert range.contains(float("-inf")) is False
+    assert range.contains(-10e6) is True
+    assert range.contains(9.0) is True
+    assert range.contains(10.0) is False
+    assert range.contains(11.0) is False
+
+
+def test_valid_greater_than_range():
+    range = Range.greater_than(10)
+
+    assert range.contains(float("-inf")) is False
+    assert range.contains(10.0) is False
+    assert range.contains(11.0) is True
+    assert range.contains(10e6) is True
+    assert range.contains(float("-inf")) is False
+
+
+def test_valid_at_least_range():
+    range = Range.at_least(20)
+
+    assert range.contains(float("-inf")) is False
+    assert range.contains(19.0) is False
+    assert range.contains(20.0) is True
+    assert range.contains(10e6) is True
+    assert range.contains(float("-inf")) is False
+
+
+def test_valid_at_most_range():
+    range = Range.at_most(20)
+
+    assert range.contains(float("-inf")) is False
+    assert range.contains(-10e6) is True
+    assert range.contains(19.0) is True
+    assert range.contains(20.0) is True
+    assert range.contains(float("-inf")) is False
+
+
+def test_valid_all_range():
+    range = Range.all()
+
+    assert range.contains(float("-inf")) is False
+    assert range.contains(-10e6) is True
+    assert range.contains(0) is True
+    assert range.contains(10e6) is True
+    assert range.contains(float("-inf")) is False
